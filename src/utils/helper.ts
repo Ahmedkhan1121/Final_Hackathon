@@ -1,6 +1,6 @@
 import { Poppins } from 'next/font/google';
 
-import {AvionFooterListType, BrandDifferentCardType, FooterListType, NavListType, NewCeramicsType, OurPopularProductsType, productListType, } from "@/utils/type/type";
+import {AvionFooterListType, BrandDifferentCardType, FooterListType, MockApiType, NavListType, NewCeramicsType, OurPopularProductsType, productListType, } from "@/utils/type/type";
 // import { CiLinkedin } from "react-icons/ci";
 // import { FaFacebookSquare } from "react-icons/fa";
 // import { FaInstagram } from "react-icons/fa6";
@@ -397,3 +397,65 @@ export const productList:productListType[]=[
     //     price:'',
     // },
 ]
+
+// api function
+import React from 'react'
+
+const fetchMock =async () => {
+ 
+    try {
+        const mockApi= await fetch(process.env.NEXT_PUBLIC_MOCK_API as string)
+        const mockData:MockApiType[] = await mockApi.json()
+        console.log(mockData)
+        return mockData
+    } catch (error) {
+        throw new Error('api not found')
+    }
+}
+fetchMock()
+export  {fetchMock}
+
+
+
+// pagination
+
+interface Pagin{
+    id:number;
+    name:string;
+    color:string;
+    bgColor:string;
+}
+export const pagin:Pagin[] = [
+    
+    {
+        id:1,
+        name:'1',
+        bgColor:'white',
+        color:'black',
+    },
+    {
+        id:2,
+        name:'2',
+        bgColor:'white',
+        color:'black',
+    },
+    {
+        id:3,
+        name:'3',
+        bgColor:'white',
+        color:'black',  
+    },
+    {
+        id:4,
+        name:'4',
+        bgColor:'white',
+        color:'black',
+    },
+    
+];
+export const paginButton = {
+    one:'1',
+    two:'2',
+    three:'3',
+    four:'4'
+};

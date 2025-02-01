@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { CiMenuBurger } from 'react-icons/ci';
 import NavListHome from '../ListItem/ListItem';
 import { useFurnContext } from '@/Context/Context';
+import { FaRegHeart } from "react-icons/fa";
 // import { HeaderContext } from '@/Context/Context';
 
 function Navbar() {
@@ -36,7 +37,8 @@ function Navbar() {
      {/* icons */}
       <div className='flex items-center gap-5  hover:cursor-pointer '>
       <div className="flex gap-4">
-      <RiShoppingCart2Line />
+      <Link href={`/productcart`}><RiShoppingCart2Line /></Link>
+      <Link href={``}><FaRegHeart /></Link>
       <CgProfile />
       </div>
       <div className=" max-[670px]:block hidden" onClick={homeContext.onHomeToggle}>

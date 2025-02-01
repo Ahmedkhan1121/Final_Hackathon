@@ -1,5 +1,5 @@
 "use client"
-import { error } from 'console';
+
 import React, { createContext, useContext, useState} from 'react'
 interface ContextDataType{
   // home
@@ -25,6 +25,8 @@ const Context = ({children}:{children: React.ReactNode;}) => {
   const onAboutToggle = () => {
     setAboutList((prev) => !prev);
   };
+
+  
 
   return (
     <>

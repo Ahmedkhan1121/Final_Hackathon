@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Select,
@@ -6,9 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useProductHook } from '@/Context/ProductContext';
 
 
 function SelectBarResponsiv() {
+  const {uniqueTypes,selectValue,onHandleSelectBox}=useProductHook()
   return (
     <nav className="bg-white hidden justify-between py-[16px] px-[25px]  max-[730px]:flex max-[730px]:px-[30px] max-[445px]:px-[16px]">
       <div>
@@ -71,16 +74,22 @@ function SelectBarResponsiv() {
             </Select>
       </div>
       <div>
-      <Select>
+      {/* <Select value={selectValue} onValueChange={(e) => onHandleSelectBox(e)}>
               <SelectTrigger className="w-[135px] max-[350px]:w-[125px] max-[330px]:w-[100px] border-none">
-                <SelectValue placeholder="Sorting" />
+                <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
+                {
+                  uniqueTypes.map((e)=>{
+                    return(
+
+                      <SelectItem value={e}>{e}</SelectItem>
+                    )
+                  })
+                }
+               
               </SelectContent>
-            </Select>
+            </Select> */}
       </div>
     </nav>
   )

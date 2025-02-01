@@ -4,8 +4,9 @@ import React from 'react'
 function HeroImgProductList({img}:{img:string}) {
   console.log(img)
   return (
+    // max-[550px]:
     <div>
-      <Image className='w-[600px] h-[641px]  max-[890px]:h-[600px] max-[850px]:h-[550px] max-[750px]:w-[500px] max-[750px]:h-[641px] max-[750px]:px-[20px] max-[750px]:py-[20px] max-[500px]:px-[0px] max-[500px]:pt-[0px] max-[441px]:h-[450px]  '
+      <Image className='w-[550px] h-[550px] p-[10px]    max-[1100px]:w-[500px] max-[1050px]:w-[450px] max-[900px]:w-[400px] max-[770px]:w-[380px] max-[750px]:h-[480px] max-[650px]:w-[350px] max-[620px]:w-[320px] max-[590px]:w-[280px] max-[550px]:h-[400px] max-[550px]:w-[900px] max-[550px]:px-[30px]   max-[500px]:px-[0px] max-[500px]:pt-[0px] max-[440px]:w-[600px]   max-[350px]:h-[360px] '
       // 46e4914903f11d10ddf03117c8cfe3b6.jpeg
       // src={`/images/hero/46e4914903f11d10ddf03117c8cfe3b6.jpeg`}
       src={img}

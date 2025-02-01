@@ -17,7 +17,7 @@ export default function Home() {
     <BrandDifferent/>
     
     {/* New ceramics */}
-    <Ceramics />
+    {/* <Ceramics /> */}
 
     {/* OurPopularProducts */}
 

@@ -18,7 +18,7 @@ function OurPopularProducts() {
     </div>
     {/* button */}
     <div className='text-center'>
-      <button className='py-3 px-7 bg-[#412929] text-[#2A254B]'><Link href={`/product`}>View collection</Link></button>
+      <button className='py-3 px-7 bg-[#F9F9F9] text-[#2A254B]'><Link href={`/product`}>View collection</Link></button>
     </div>
   </section>
   )
