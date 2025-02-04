@@ -74,22 +74,22 @@ function SelectBarResponsiv() {
             </Select>
       </div>
       <div>
-      {/* <Select value={selectValue} onValueChange={(e) => onHandleSelectBox(e)}>
+      <Select value={selectValue} onValueChange={(e) => onHandleSelectBox(e)}>
               <SelectTrigger className="w-[135px] max-[350px]:w-[125px] max-[330px]:w-[100px] border-none">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
                 {
-                  uniqueTypes.map((e)=>{
+                  uniqueTypes.map((e,i)=>{
                     return(
 
-                      <SelectItem value={e}>{e}</SelectItem>
+                      <SelectItem value={e} key={i}>{e}</SelectItem>
                     )
                   })
                 }
                
               </SelectContent>
-            </Select> */}
+            </Select>
       </div>
     </nav>
   )

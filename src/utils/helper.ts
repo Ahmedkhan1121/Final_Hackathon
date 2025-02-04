@@ -1,6 +1,6 @@
 import { Poppins } from 'next/font/google';
 
-import {AvionFooterListType, BrandDifferentCardType, FooterListType, MockApiType, NavListType, NewCeramicsType, OurPopularProductsType, productListType, } from "@/utils/type/type";
+import {AvionFooterListType, BrandDifferentCardType, FooterListType, NavListType, NewCeramicsType, OurPopularProductsType, productListType, } from "@/utils/type/type";
 // import { CiLinkedin } from "react-icons/ci";
 // import { FaFacebookSquare } from "react-icons/fa";
 // import { FaInstagram } from "react-icons/fa6";
@@ -399,21 +399,20 @@ export const productList:productListType[]=[
 ]
 
 // api function
-import React from 'react'
 
-const fetchMock =async () => {
+// const fetchMock =async () => {
  
-    try {
-        const mockApi= await fetch(process.env.NEXT_PUBLIC_MOCK_API as string)
-        const mockData:MockApiType[] = await mockApi.json()
-        console.log(mockData)
-        return mockData
-    } catch (error) {
-        throw new Error('api not found')
-    }
-}
-fetchMock()
-export  {fetchMock}
+//     try {
+//         const mockApi= await fetch(process.env.NEXT_PUBLIC_MOCK_API as string)
+//         const mockData:MockApiType[] = await mockApi.json()
+//         console.log(mockData)
+//         return mockData
+//     } catch (error) {
+//         throw new Error('api not found')
+//     }
+// }
+// fetchMock()
+// export  {fetchMock}
 
 
 

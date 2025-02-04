@@ -1,15 +1,21 @@
 "use client"
 import Cookies from "js-cookie";    //COOKIES TYPE
 import { paginButton } from "@/utils/helper";
-import { Action, CartAction, CartDec, CartListType, Dimensions, InitialCartData, InitialData, InitialProdData, MockApiType, ProductAction, ProductContextType, productListType } from "@/utils/type/type"
-import { ChangeEvent, createContext, useContext, useEffect, useReducer, useState } from "react"
+import axios from "axios";
+import { Address,   CartAction, CartDec, CartListType, Dimensions, InitialCartData, InitialProdData, MockApiType, ProductAction, ProductContextType, Rate, ShipmentInpCheck, TrackingData, trackingObjType  } from "@/utils/type/type"
+import {
+  ChangeEvent,
+  //  ChangeEvent,
+   createContext, FormEvent, useCallback, useContext, useEffect, useReducer, useState } from "react"
+import getStripe from "@/utils/getStripe";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 //COOKIES FUNCTION
 
 // export const saveCartToCookies = (cart:CartListType[]) => {
  
 // };
-
 
 
 // export const getCartFromCookies = () => {
@@ -19,6 +25,7 @@ export const getCartFromCookies = () => {
   try {
     return JSON.parse(Cookies.get("avioncart") || "[]");
   } catch (error) {
+    console.log(error)
     return [];
   }
 };
@@ -47,6 +54,21 @@ const prodInitialData:InitialProdData = {
     FILTERCATEG:'FILTERCATEG',
   };
 
+  //Calculate Total Quantity
+  const calculateQuantity = (addCart:CartListType[]) => {
+    const setTotalQuantity = addCart.map((e) => e.productquantity)
+              .reduce((prev, curr) => {
+                return prev + curr;
+    }, 0);
+    return setTotalQuantity;
+  };
+   //Calculate Total Quantity
+   const calculateTotalPrice = (addCart:CartListType[]) => {
+    const setTotalPrice = addCart.reduce((total, item) => {
+      return total + (item.price * item.productquantity);
+    }, 0);
+    return setTotalPrice;
+  };
 
   // CART INITIAL DATA AND ACTION FOR REDUCER
 
@@ -54,12 +76,13 @@ const prodInitialData:InitialProdData = {
     cartList:[],
     productColor:'',
     dimensions:{height:'',depth:'',width:''},
-    totalPrice:0,
-    totalQuantity:0,
+    totalPrice:calculateTotalPrice(getCartFromCookies()),
+    totalQuantity:calculateQuantity(getCartFromCookies()),
     addCartProd:getCartFromCookies(),
     shipping:10,
     wishList:getWishList(),
     toast:false
+
   };
   const CARTACTION = {
     CARTSETLIST:'CARTSETLIST',
@@ -79,7 +102,7 @@ const prodInitialData:InitialProdData = {
   
   //DESTRUCTION OF CART ACTION
 
-  const {CARTSETLIST,ADDCOLOR,DIMENSIONS,DECPRODUCTQUAN,INCPRODUCTQUAN,ADDTOCART,INC_ON_CART_PRODUCT,DEC_ON_CART_PRODUCT,ORDER_DONE,RESET_COLOR_SIZE,WISHLIST,CLEAR_CART,DELETE_ITEM} = CARTACTION;
+  const {CARTSETLIST,ADDCOLOR,DIMENSIONS,DECPRODUCTQUAN,INCPRODUCTQUAN,ADDTOCART,INC_ON_CART_PRODUCT,DEC_ON_CART_PRODUCT,RESET_COLOR_SIZE,WISHLIST,CLEAR_CART,DELETE_ITEM} = CARTACTION;
 
 
 
@@ -95,6 +118,35 @@ function ProductContext({children}:{children: React.ReactNode;}) {
      } 
      //WISH LIST ADD COLOR
 const [colr,setColr] = useState<boolean>(false);
+//ROUTER FOR NAVIGATION
+const navigRoute = useRouter();
+//handle toast for addd to cart
+// const [cartAlert,setCartAlert] = useState(false);
+//HANDLE SHIPMENT INPUT
+const [shipmentInp,setShipmentInp] = useState<Address>({
+  name: "",
+  phone: "",
+  addressLine1: "1600 Pennsylvania Avenue NW",
+  cityLocality: "Washington",
+  stateProvince: "DC",
+  postalCode: "20500",
+  countryCode: "US",
+  addressResidentialIndicator: "no",
+
+});
+ const [rateList, setRatesList] = useState<Rate[]>([]);
+  const [rateId, setRateId] = useState<string | null>(null);
+  const [labelPdf, setLabelPdf] = useState<string | null>(null);
+  const [trackingObj, setTrackingObj] = useState<trackingObjType | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [shipError, setShipError] = useState<string>('');
+  //tracking on shipment
+  const [labelId, setLabelId] = useState("");
+  const [trackingData, setTrackingData] = useState<TrackingData | null>(null);
+  const [trackError, setTrackError] = useState<string>('');
+  const serchParams = useSearchParams();
+  const queryId = serchParams.get('labelid') as string;
+  const trackRoute = useRouter();
 
     const {FILTERCATEG,LOADAVION,PRODPAGEONE,PRODPAGETWO,PRODPAGETHREE,PRODPAGEFOUR} = PRODUCTACTION;
 
@@ -143,11 +195,10 @@ const [colr,setColr] = useState<boolean>(false);
            console.log(fetchProduct)
         return fetchProduct;
         } catch (error) {
-            throw new Error('product not found')
+            throw new Error(`product not found : ${error}`)
         }
 
     }
-
 
     //DESTRUCTURE OF PRODUCT DATA
     const {productList,limit,page} = prodData;
@@ -169,7 +220,7 @@ const [colr,setColr] = useState<boolean>(false);
  };
  //CALL THE FUNCTION
  callFetchFunc();  
-    },[page,LOADAVION,CARTSETLIST]);
+    },[page,LOADAVION,CARTSETLIST,limit]);
 
 
     //DESTRUCTURE THE PAGINATION BUTTON VALUE
@@ -229,26 +280,14 @@ const [colr,setColr] = useState<boolean>(false);
     cartDispatch({type:DECPRODUCTQUAN,payload:id});
     // alert(id)
   };
+  //reset the color and the other property when i click on product card
+  const onProductDetail = (id:string) => {
+    cartDispatch({ type: RESET_COLOR_SIZE, payload: id });
+    navigRoute.push(`/product/${id}`);
 
-  //Calculate Total Quantity
-  const calculateQuantity = (addCart:CartListType[]) => {
-    const setTotalQuantity = addCart.map((e) => e.productquantity)
-              .reduce((prev, curr) => {
-                return prev + curr;
-    }, 0);
-    return setTotalQuantity;
   };
-   //Calculate Total Quantity
-   const calculateTotalPrice = (addCart:CartListType[]) => {
-    const setTotalPrice = addCart.reduce((total, item) => {
-      return total + (item.price * item.productquantity);
-    }, 0);
-    return setTotalPrice;
-  };
-  //handle add to cart button
-  const addToCart = (id:string) => {
-    cartDispatch({type:ADDTOCART,payload:id});
-  }
+
+  
 
   //cart Product Increment
   const addProdInc = (id:number) => {
@@ -281,13 +320,217 @@ const [colr,setColr] = useState<boolean>(false);
     }
   }
 
+
+
 //ADD TO CARD REduer
   const [cartData,cartDispatch] = useReducer(cartReducer,cartInitialData);
-  //  COOKIES DATA 
-  // useEffect(()=>{
-  //   saveCartToCookies(cartData.addCartProd)
-  // },[cartData.addCartProd])
 
+  //handle add to cart button
+  const addToCart = (id:string) => {
+    cartDispatch({type:ADDTOCART,payload:id});
+    
+  }
+
+    //HANDLE STRIPE CHECKOUT FOR PAYMENT
+    const onHandleCheckout = async () => {
+      if(!cartData || cartData.addCartProd.length===0){
+        alert('Cart is EMpty')
+        return;
+      }
+      try {
+        const { addCartProd } = cartData;
+        const loadStripe = await getStripe();
+    
+        console.log("⏳ Sending Checkout Request...", addCartProd);
+    
+        const checkResponse = await fetch("/api/stripe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(addCartProd), // ✅ Corrected JSON structure
+        });
+    
+        const responseData = await checkResponse.json();
+        console.log("✅ Checkout API Response:", responseData);
+    
+        if (!checkResponse.ok) {
+          console.error("❌ Checkout API Error:", responseData.error || "Unknown Error");
+          alert(`Checkout Failed: ${responseData.error || "Try again!"}`);
+          return;
+        }
+    
+        if (!responseData.sessionId) {
+          alert("Invalid response from checkout session. Please try again.");
+          return;
+        }else{
+
+        // }
+
+        //POST REQUEST TO SEND EMAIL TO THE USER
+        // if(responseData.sessionId){
+          // const userEmailResp = await fetch('/api/send-email',{
+          //   method:'POST',
+          //   headers:{
+          //     "Content-Type":'application/json'
+          //   },
+          //   body:JSON.stringify({
+          //     addCartProd,
+          //     totalPrice,
+          //   })
+          // });
+          // if(!userEmailResp){
+          //   throw new Error('Failed To send Email to User')
+          // }
+            
+            console.log("🔄 Redirecting to Stripe Checkout...");
+              await loadStripe?.redirectToCheckout({ sessionId: responseData.sessionId });
+            }
+    
+      } catch (error) {
+        console.error("❌ Error in Checkout:", error);
+        alert("Something went wrong during checkout. Please try again.");
+      }
+    }
+
+    //Handle Shipment Form
+    
+    const onHandleShipmentInp = (e:ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setShipmentInp((prev: Address) => ({ ...prev, [name]: value }));
+  };
+
+  const onHandleShipmentForm = async  (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const {addressLine1,cityLocality,countryCode,name,phone,postalCode,stateProvince} = shipmentInp;
+    //Regex For Input Fields
+    const phoneNumRegex = /^[0-9]{11}$/;
+    const matchPhoneNum = phone.match(phoneNumRegex);
+    const postalCodeNumRegex = /^[0-9]{5}$/;
+    const matchPostalCodeNum = postalCode.match(postalCodeNumRegex);
+    
+    const newInpValidCheck: ShipmentInpCheck = {
+      phoneCheck: matchPhoneNum,
+      firstnameCheck: name.length >= 3 && name.length <= 11,
+      addressCheck: addressLine1.length >= 10 && addressLine1.length <= 30,
+      cityCheck: cityLocality.length >= 4 && cityLocality.length <= 20,
+      countryCheck: countryCode.length >= 1 && countryCode.length <= 5,
+      stateCheck: stateProvince.length >= 2 && stateProvince.length <= 20,
+      postalcodeCheck: matchPostalCodeNum,
+
+    };
+    const {addressCheck,cityCheck,countryCheck,firstnameCheck,phoneCheck,postalcodeCheck,stateCheck} = newInpValidCheck;
+    if(!addressCheck || !cityCheck || !countryCheck  || !firstnameCheck  || !phoneCheck || !postalcodeCheck || !stateCheck){
+      toast.error(`Please complete all required fields before proceeding to checkout.`)
+    }
+    else{
+      toast.success(`Thank you for your purchase! Your payment was successful. A confirmation email has been sent to  .`);
+      setLoading(true);
+    setShipError('');
+      setRatesList([]);
+      try {
+        const shipResponse = await axios.post("/api/get-rates", {
+          shipmentInp,
+          packages: [
+                 { weight: { value: 5, unit: "ounce" }, dimensions:{ height: 3, width: 15, length: 10, unit: "inch" } },
+               ],
+        });
+      
+        console.log(shipResponse.data)
+        setRatesList(shipResponse.data.shipmentDetail.rateResponse.rates);
+      } catch (error) {
+        console.error(`Error in Fetching Rating:${error}`)
+        setShipError('Error when Fetching the Rate List')
+      }finally{
+        setLoading(false)
+      }
+      setShipmentInp({
+      addressLine1:'',
+      cityLocality:'',
+      addressResidentialIndicator:'no',
+      countryCode:'',
+      name:'',
+      phone:"",
+      postalCode:'',
+      stateProvince:'',
+      });
+    }
+};
+
+//HANDLE SHIPPING RATE
+const handleRate = (id:string|null) => {
+  setRateId(id)
+};
+//CREATING SHIPPING LABEL
+const onCreatingLabel = async () => {
+  if(!rateId){
+    alert('Select a Rate to create a Label')
+    return;
+  };
+
+  setLoading(true);
+  setShipError('');
+
+  try {
+    const labelResponse = await axios.post('/api/label',{rateId})
+    const responseData = labelResponse.data;
+    setLabelPdf(responseData.labelDownload.href);
+    setTrackingObj({
+      trackingNumber: responseData.trackingNumber,
+      labelId: responseData.labelId,
+      carrierCode: responseData.carrierCode,
+    });
+    console.log(responseData)
+  } catch (error) {
+    console.error(error);
+    setShipError('Here are some issue to create a label. Please try later.')
+  }finally {
+    setLoading(false);
+  }
+}
+//HANDLING TRACKING
+const handleTracking = useCallback(
+  async (labelid:string) => {
+   if(!labelid){
+    setTrackError('Label ID is Necessary');
+    return;
+   }
+    setLoading(true);
+    setTrackError('');
+    try {
+      trackRoute.replace(`/tracking?labelId=${labelid}`)
+      const trackResponse = await axios.get(`/api/tracking/${labelid}`);
+      setTrackingData(trackResponse.data);
+    } catch (error) {
+      console.error(`Error on tracking shipment ${error}`);
+      setTrackError('Failed To Track Shipment. Please Re-check the Label ID');
+    }finally{
+      setLoading(false);
+    }
+
+  },
+  [trackRoute]
+ 
+); 
+
+useEffect(() => {
+  if(queryId){
+    setLabelId(queryId);
+    handleTracking(queryId)
+  }
+},[queryId,handleTracking])
+
+//handle shipment tracking input
+const onHandleTrack = (e:string) => {
+  setLabelId(e)
+}
+
+//submissioon of shipment tracking
+const onSubmitTracking = (e:FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+  handleTracking(labelId)
+}
   //HANDEL COOIES DATA 
   useEffect(()=>{
     Cookies.set("avioncart", JSON.stringify(cartData.addCartProd), { expires: 7 }); // 7 din tak store rahega
@@ -333,6 +576,17 @@ const [colr,setColr] = useState<boolean>(false);
            }
          });
          return { ...state, cartList: updatedCartDec};
+         case RESET_COLOR_SIZE:
+          const updatedCartList = state.cartList.map((e) => {
+            if(e.id === (action.payload as string)){
+              // remove one quantity for set the decrement of product
+             const deleteQuan = e.productQuantity-1;
+              return {...e, productQuantity:e.productQuantity-deleteQuan}
+            }else{
+              return e;
+            }
+          });
+          return{...state,cartList:updatedCartList, productColor:''};
          case ADDTOCART:
           const prodFind = state.cartList.find((e)=> {
             return e.id === (action.payload as string);
@@ -340,19 +594,11 @@ const [colr,setColr] = useState<boolean>(false);
           
           if(prodFind){
             if(state.productColor=== '' || prodFind.productQuantity<1){
-             alert('Set the color,size and quantity')
-              // setEmptyAlert(true);
+             toast.warning('Set the color,size and quantity')
             }else{
-              // setEmptyAlert(false);
-              // setCartAlert(true);
               const getColor =prodFind.ProductColor.find((e) => {
                 return e === state.productColor;
               });
-            //   const getSize =prodFind.dimensions.find((e) => {
-            //    return e === state.dimensions;
-            //  });
-             // alert(${getSize} ${getColor})
-             // alert(prodFind.productQuantity)
              if(getColor&&state.dimensions){
                const addProductItem:CartListType = {
                  productid:new Date().getTime(),
@@ -386,15 +632,15 @@ const [colr,setColr] = useState<boolean>(false);
                      }
                    });
                    //add the updated list of cart
+                   toast.success('You are adding more quantity')
                    return {...state,addCartProd:mapCartList,totalQuantity:calculateQuantity(mapCartList),totalPrice:calculateTotalPrice(mapCartList),toast:false};
  
                  // }
                 
                }else{
                  const addCartItems:CartListType[] =[...state.addCartProd,addProductItem];
-                //  alert('Product Added');
-                console.log(addCartItems)
-                
+                 console.log(addCartItems)
+                 toast.success('Product Added in the cart');
                  // setShowToast(true);
                  return {...state,addCartProd:addCartItems,totalQuantity:calculateQuantity(addCartItems),totalPrice:calculateTotalPrice(addCartItems),toast:true};
                }
@@ -507,7 +753,7 @@ const [colr,setColr] = useState<boolean>(false);
 
 
   return (
-  <ProductCont.Provider value={{productList,navTogg,onHandlePrev,paginationOperate,page,uniqueTypes,uniqueprices,onHandleSelectBox,selectValue,setProdColor,cartData,setProdDimension,onProdDec,onProdInc,addToCart,addProdDec,addProdInc,cartDeleteItem,clearCart,addWishList,colr}}>{children}</ProductCont.Provider>
+  <ProductCont.Provider value={{productList,navTogg,onHandlePrev,paginationOperate,page,uniqueTypes,uniqueprices,onHandleSelectBox,selectValue,setProdColor,cartData,setProdDimension,onProdDec,onProdInc,addToCart,addProdDec,addProdInc,cartDeleteItem,clearCart,addWishList,colr,onHandleCheckout,onHandleShipmentForm,onHandleShipmentInp,labelId,labelPdf,loading,rateId,rateList,shipError,shipmentInp,trackError,trackingData,trackingObj,handleRate,onCreatingLabel,onHandleTrack,onSubmitTracking,onProductDetail}}>{children}</ProductCont.Provider>
   )
 }
 

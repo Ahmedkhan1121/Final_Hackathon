@@ -5,7 +5,6 @@ import { useProductHook } from '@/Context/ProductContext'
 // import { IoStarSharp } from "react-icons/io5";
 import { CiStar } from 'react-icons/ci';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
-import Link from 'next/link';
 
 function HeroContentProductList({name,price,color,id}:{name:string,price:number,color:string[],id:string}) {
   const {setProdColor,cartData,addToCart,colr,addWishList} = useProductHook();

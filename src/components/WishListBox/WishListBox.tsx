@@ -1,7 +1,4 @@
 'use client';
-import { popin } from '@/utils/helper';
-// import { poppins, rubikBuble } from '@/utils/Helper/helper'
-// import WishCard from '../WishCard/WishCard';
 import { useProductHook } from '@/Context/ProductContext';
 import WishCard from '../WishCard/WishCard';
 

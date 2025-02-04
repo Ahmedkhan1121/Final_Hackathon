@@ -1,5 +1,4 @@
 import React from 'react'
-import ListItemProduct from '../ListItemProduct/ListItemProduct'
 import { navList } from '@/utils/helper';
 import Link from 'next/link';
 

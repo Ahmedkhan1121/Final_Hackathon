@@ -6,10 +6,9 @@ import NavLogoProduct from "../NavLogoProduct/NavLogoProduct"
 import NavAboutIcons from "../NavAboutIcons/NavAboutIcons";
 import NavListAbout from "../NavListAbout/NavListAbout";
 import { ScrollListAbout } from "../ScrollListAbout/ScrollListAbout";
-import { useFurnContext } from "@/Context/Context";
 
 function NavbarAbout() {
-const aboutContext =useFurnContext()
+// const aboutContext =useFurnContext()
 
   //  const [navList,setNavList]= useState<boolean>(false);
   //   const onNavToggle = () => {

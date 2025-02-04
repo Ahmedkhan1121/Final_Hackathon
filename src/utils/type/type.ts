@@ -1,5 +1,4 @@
-import React, { ChangeEvent } from "react";
-import { MdExposurePlus1 } from "react-icons/md";
+import React, { ChangeEvent, FormEvent } from "react";
 
 export interface NavListType{
     Link:string,
@@ -87,18 +86,27 @@ export interface ProductContextType{
     clearCart: () => void;
      addWishList: (id:string) => void;
      colr:boolean;
+     onHandleCheckout: () => void;
+     onHandleShipmentForm :(e:FormEvent<HTMLFormElement>) => void;
+    onHandleShipmentInp : (e:ChangeEvent<HTMLInputElement>) => void;
+    shipmentInp:Address;
+    rateList:Rate[];
+    rateId:string|null;
+    labelPdf:string|null;
+    loading:boolean;
+    shipError:string;
+    trackingObj:trackingObjType|null;
+    labelId:string;
+    trackingData:TrackingData|null;
+    trackError:string;
+    handleRate:(id:string|null) =>void;
+    onCreatingLabel:() =>void;
+    onHandleTrack: (e:string) => void;
+    onSubmitTracking: (e:FormEvent<HTMLFormElement>) => void;
+    onProductDetail:(id:string) =>void;
 }
 
-// add to cart
 
-export interface InitialData{
-    card:productListType[];
-    addToCart:productListType[]
-}
-export interface Action{
-    type:string;
-    payload:any;
-}
 
 
 // Mock Api Type
@@ -180,3 +188,99 @@ export interface CartDec{
     quantity:number;
 }
 
+
+//Shipment Types
+export type Address = {
+    name: string;
+    phone: string;
+    addressLine1: string;
+    addressLine2?: string;
+    cityLocality: string;
+    stateProvince: string;
+    postalCode: string;
+    countryCode: string;
+    addressResidentialIndicator: "yes" | "no";
+  };
+  export type unit = "ounce" | "gram" | "kilogram" | "pound";
+  export type dimensionUnit = "inch" | "centimeter";
+  
+  export type Package = {
+    weight: {
+      value: number;
+      unit: unit;
+    };
+    dimensions: {
+      height: number;
+      width: number;
+      length: number;
+      unit: dimensionUnit;
+    };
+  };
+  
+  export type Rate = {
+    rateId: string;
+    rateType: string;
+    carrierId: string;
+    shippingAmount: {
+      currency: string;
+      amount: number;
+    };
+    serviceType: string;
+    serviceCode: string;
+    trackable: boolean;
+    carrierFriendlyName: string;
+    validationStatus: string;
+    warningMessages?: string[];
+  };
+  
+  export interface trackingObjType {
+    trackingNumber: string;
+    labelId: string;
+    carrierCode: string;
+  }
+  
+  export interface TrackingData {
+    trackingNumber?: string;
+    statusDescription?: string;
+    carrierStatusDescription?: string;
+    estimatedDeliveryDate?: string;
+    actualDeliveryDate?: string;
+  }
+
+  //shipment input types
+export interface ShipmentInpType{
+    email:string;
+    phone:string;
+    firstname:string;
+    lastname:string;
+    country:string;
+    state:string;
+    address:string;
+    city:string;
+    postalcode:string;
+  }
+
+  //shipment input label type
+  export interface CheckLabel {
+    labelValue: string;
+  }
+
+  //shipmentout Input
+export interface ShipmentInp {
+  place: string;
+  name: string;
+  value:string;
+}
+
+ //shipment boolean state
+export interface ShipmentInpCheck{
+    phoneCheck:RegExpMatchArray|null;
+    firstnameCheck:boolean;
+    countryCheck:boolean;
+    stateCheck:boolean;
+    addressCheck:boolean;
+    cityCheck:boolean;
+    postalcodeCheck:RegExpMatchArray|null;
+  }
+
+  

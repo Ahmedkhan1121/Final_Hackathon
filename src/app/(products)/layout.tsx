@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import HeaderProduct from "@/components/HeaderProduct/HeaderProduct";
-import FooterProducList from "@/components/Footer2/Footer2";
+// import FooterProducList from "@/components/Footer2/Footer2";
 // import { popin } from "@/utils/hepler";
-import TopBar from "@/components/TopBar/TopBar";
+// import TopBar from "@/components/TopBar/TopBar";
 import { popin } from "@/utils/helper";
-import Context from "@/Context/Context";
+// import Context from "@/Context/Context";
 import ProductContext from "@/Context/ProductContext";
 
 

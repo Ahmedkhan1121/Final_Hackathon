@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React from 'react'
 import CartQuantityBtn from '../CartQuantityBtn/CartQuantityBtn'
 import { CartListType } from '@/utils/type/type'
-import { AiTwotoneDelete } from "react-icons/ai";
 import { useProductHook } from '@/Context/ProductContext';
 import { RiDeleteBinLine } from 'react-icons/ri'
 

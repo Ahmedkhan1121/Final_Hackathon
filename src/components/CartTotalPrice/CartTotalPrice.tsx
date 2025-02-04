@@ -3,7 +3,7 @@ import { useProductHook } from '@/Context/ProductContext'
 import React from 'react'
 
 function CartTotalPrice() {
-  const {cartData}=useProductHook();
+  const {cartData,onHandleCheckout}=useProductHook();
   const {totalPrice}=cartData
   return (
     <div className='flex flex-col items-end gap-3 pt-[50px] pb-[80px]'>
@@ -19,7 +19,7 @@ function CartTotalPrice() {
 
     </div>
     <div>
-        <button className='bg-[#2A254B] text-sm rounded-md py-[16px] px-[32px] text-white'>Go to checkout</button>
+        <button className='bg-[#2A254B] text-sm rounded-md py-[16px] px-[32px] text-white' onClick={onHandleCheckout}>Go to checkout</button>
     </div>
 
     </div>

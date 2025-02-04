@@ -1,7 +1,5 @@
 'use client';
-import NavLogoProduct from '../NavLogoProduct/NavLogoProduct';
 import NavListProduct from '../NavListproduct/NavListProduct';
-import NavIcons from '../NavIcons/NavIcons';
 import { useProductHook } from '@/Context/ProductContext';
 
 

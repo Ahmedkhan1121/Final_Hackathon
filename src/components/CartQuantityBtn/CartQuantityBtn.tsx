@@ -1,6 +1,5 @@
 'use client'
 import { useProductHook } from '@/Context/ProductContext';
-import React, { useState } from 'react'
 // import { FaMinus } from 'react-icons/fa';
 import { FiPlus } from 'react-icons/fi';
 import { TfiMinus } from 'react-icons/tfi';
