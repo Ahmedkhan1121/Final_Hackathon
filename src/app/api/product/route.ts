@@ -1,6 +1,13 @@
 import { client } from "@/sanity/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 
+// CORS middleware function
+function setCorsHeaders(response: NextResponse) {
+  response.headers.set("Access-Control-Allow-Origin", process.env.NEXT_PUBLIC_AVION_API as string); // Allow all origins (update as per your requirement)
+  response.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+}
+
 export async function GET(req: NextRequest) {
   try {
     // Parse query parameters for pagination
@@ -35,11 +42,19 @@ export async function GET(req: NextRequest) {
     );
 
     // Return paginated response
-    return NextResponse.json(
+    const response =  NextResponse.json(
        avionData,
       { status: 200 }
     );
+    setCorsHeaders(response)
+    return response;
+
   } catch (error) {
-    return NextResponse.json({ error:` ${error} : Failed to fetch products` }, { status: 500 });
+    const errorResponse = NextResponse.json(
+      { error: `${error} : failed to fetch the products `},
+      { status: 500 }
+    );
+    setCorsHeaders(errorResponse);
+    return errorResponse;
   }
 }

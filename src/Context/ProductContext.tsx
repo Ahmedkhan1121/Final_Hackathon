@@ -205,13 +205,13 @@ const [shipmentInp,setShipmentInp] = useState<Address>({
     useEffect(() => {
       const callFetchFunc = async ()=> {
         //FOR PRODUCT LIST SHOW
-       const avionFetch:MockApiType[] = await productApi(`http://localhost:3000/api/product?limit=${limit}&page=${page}`);
+       const avionFetch:MockApiType[] = await productApi(`${process.env.NEXT_PUBLIC_AVION_API}/api/product?limit=${limit}&page=${page}`);
        const avionList = avionFetch.map((e) => ({...e,productQuantity:1}));
       //  console.log(avionList);
         dispatch({type:LOADAVION,payload:avionList});
 
         //ADD CART LIST TO PERFORM ADD TO CART
-        const backUp:MockApiType[] = (await productApi(`http://localhost:3000/api/product`));
+        const backUp:MockApiType[] = (await productApi(`${process.env.NEXT_PUBLIC_AVION_API}/api/product`));
         const backUpList = backUp.map((e) => ({...e,productQuantity:1}))
         // console.log(backUpList);
         // dispatch({type:BACKUP,payload:backUp});
