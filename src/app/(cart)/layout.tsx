@@ -4,6 +4,7 @@ import "../globals.css";
 import HeaderProduct from "@/components/HeaderProduct/HeaderProduct";
 import { popin } from "@/utils/helper";
 import ProductContext from "@/Context/ProductContext";
+import { Suspense } from "react";
 
 
 const geistSans = localFont({
@@ -32,6 +33,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${popin.className} antialiased`}
         >
+          <Suspense fallback={<div>Loading...</div>}>
+
           <ProductContext>
           {/* <Context> */}
         {/* <TopBar/> */}
@@ -40,6 +43,7 @@ export default function RootLayout({
         {/* <FooterProducList/> */}
         {/* </Context> */}
         </ProductContext>
+          </Suspense>
       </body>
     </html>
   );
