@@ -38,7 +38,7 @@ function Navbar() {
       <div className='flex items-center gap-5  hover:cursor-pointer '>
       <div className="flex gap-4">
       <Link href={`/productcart`}><RiShoppingCart2Line /></Link>
-      <Link href={``}><FaRegHeart /></Link>
+      <Link href={`/bun`}><FaRegHeart /></Link>
       <CgProfile />
       </div>
       <div className=" max-[670px]:block hidden" onClick={homeContext.onHomeToggle}>
