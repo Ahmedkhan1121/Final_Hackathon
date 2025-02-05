@@ -26,7 +26,7 @@ function HeroContentProductList({name,price,color,id}:{name:string,price:number,
         </div>
        
         <div className='flex gap-6 items-center   '>
-          <p className='text-2xl'>${price}</p>  
+          <p className='text-2xl'>£{price}</p>  
          {colr ? <FaHeart className='text-[#2A254B]' />
  :<FaRegHeart onClick={()=>addWishList(id)} className={ `${colr ? 'text-[#2A254B]':''} text-xl`}/>}
          </div>

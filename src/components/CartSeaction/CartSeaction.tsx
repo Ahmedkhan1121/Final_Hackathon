@@ -8,7 +8,7 @@ function CartSeaction() {
   return (
     <section className='flex flex-col bg-[#f9f9f9]'>
        
-       <div className='px-[130px]  max-[950px]:px-[60px] max-[700px]:px-[30px] max-[340px]:px-[12px]'>
+       <div className='px-[130px]  max-[950px]:px-[60px] max-[700px]:px-[30px] max-[340px]:px-[12px]  max-[310px]:pr-[2px]'>
 
         {/* heading */}
       <div className='flex justify-between max-[510px]:flex-col'>

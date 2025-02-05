@@ -13,7 +13,7 @@ function ProductCard() {
             //  <Link href={`/product/${e.id}`} key={e.id} >
                 <div key={e.id} className='flex flex-col gap-3 pb-[20px] cursor-pointer'onClick={() => onProductDetail(e.id)} >
                 <div>
-                <Image className='h-[375px] w-[305px] max-[660px]:w-[280px] max-[610px]:w-[270px] max-[590px]:w-[250px] max-[590px]:h-[340px] max-[540px]:w-[230px] max-[540px]:h-[300px] max-[500px]:w-[200px] max-[500px]:h-[255px] max-[450px]:w-[180px] max-[450px]:h-[225px] max-[400px]:w-[170px] max-[400px]:h-[205px]  max-[380px]:w-[150px] max-[380px]:h-[180px]  max-[345px]:w-[140px] max-[345px]:h-[170px] max-[325px]:w-[130px] max-[290px]:w-[127px] '
+                <Image className='rounded-sm h-[375px] w-[305px] max-[660px]:w-[280px] max-[610px]:w-[270px] max-[590px]:w-[250px] max-[590px]:h-[340px] max-[540px]:w-[230px] max-[540px]:h-[300px] max-[500px]:w-[200px] max-[500px]:h-[275px] max-[469px]:w-[270px] max-[469px]:h-[320px] max-[390px]:w-[250px] max-[390px]:h-[280px] max-[325px]:w-[230px] '
                 src={e.productimg}
                 alt={e.productname}
                 height={200}
@@ -21,8 +21,8 @@ function ProductCard() {
                 />
                 </div>
                 <div className='flex flex-col gap-2'>
-                    <h4>{e.productname}</h4>
-                    <p>{e.price}</p>
+                    <h4 className=' max-[540px]:w-[220px]'>{e.productname}</h4>
+                    <p>£{e.price}</p>
                  </div>
                 </div>
             //  </Link>
