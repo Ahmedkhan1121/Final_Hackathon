@@ -1,26 +1,33 @@
 'use client'
 import { useRouter } from 'next/navigation';
-// import { useEffect } from 'react';
+// // import { useEffect } from 'react';
 import { FcPaid } from 'react-icons/fc'
 // import { fireWorks } from '@/utils/coffetti';
-// import { popin } from '@/utils/helper';
 function SuccessPage() {
   const homeNavig = useRouter();
 //   useEffect(() => {
 //     fireWorks();
 //   },[]);
   return (
-    <section className={`flex justify-center items-center h-screen bg-slate-300`}>
-
-      <div className='bg-sky-300 flex flex-col items-center gap-3 p-5 text-sm border-4 border-dashed max-[310px]:w-[270px] max-[280px]:w-[250px]'>
-      <FcPaid className='text-8xl'/>
-      <h1 className={`text-center text-3xl uppercase  max-[600px]:text-2xl max-[330px]:text-xl`}>thank you for your purchase</h1>
-      <p className='w-[600px] text-center max-[700px]:w-[500px] max-[600px]:w-[400px] max-[480px]:text-[13px] max-[480px]:w-[350px] max-[420px]:w-[300px] max-[370px]:text-[12px] max-[370px]:w-[250px] max-[280px]:text-[11px]'>Thank you for shopping with us! 🎊 Your order has been successfully placed, and we’re getting it ready for shipment.</p>
-      <h4 className='text-center max-[480px]:text-[13px] max-[370px]:text-[12px] max-[370px]:w-[250px] max-[280px]:text-[11px] max-[280px]:w-[230px]'>📩 Need Help? Contact us at [Support Email]</h4>
-      <h5 className='text-center max-[600px]:w-[400px] max-[480px]:text-[13px] max-[480px]:w-[350px] max-[420px]:w-[300px] max-[370px]:text-[12px] max-[370px]:w-[250px] max-[280px]:text-[11px]'>We appreciate your trust in us and look forward to serving you again! 😊</h5>
-      <button className='capitalize bg-sky-200 p-3 text-slate-50 rounded-md hover:animate-pulse' onClick={() => homeNavig.push('/generatetracking')}>generate tracking number</button>
-      </div>
-    </section>
+    <section className="flex justify-center items-center h-screen bg-gradient-to-br from-slate-200 to-slate-300">
+    <div className="bg-white shadow-xl rounded-2xl flex flex-col items-center gap-4 p-6 text-center w-[90%] max-w-md transition-all duration-300 animate-fadeIn">
+      <FcPaid className="text-8xl animate-bounce" />
+      <h1 className="text-3xl font-bold text-gray-800">Thank You for Your Purchase!</h1>
+      <p className="text-gray-600 text-sm leading-relaxed">
+        🎊 Your order has been successfully placed, and we’re getting it ready for shipment.
+      </p>
+      <h4 className="text-gray-500 text-sm">📩 Need Help? Contact us at [Support Email]</h4>
+      <h5 className="text-gray-500 text-sm">
+        We appreciate your trust in us and look forward to serving you again! 😊
+      </h5>
+      <button
+        className="mt-4 px-5 py-3 text-white bg-blue-500 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-600 hover:scale-105"
+        onClick={() => homeNavig.push("/generatetracking")}
+      >
+        Generate Tracking Number
+      </button>
+    </div>
+  </section>
   )
 }
 

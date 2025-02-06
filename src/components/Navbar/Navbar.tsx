@@ -27,7 +27,7 @@ function Navbar() {
     <nav className=''>
       {/* SearchIcon */}
     <div  className='flex items-center justify-between  p-4  border-b-2 border-[#e8e8e8] '>
-    <div className='flex items-center  hover:cursor-pointer'><IoIosSearch /></div>
+    <div className='flex items-center  hover:cursor-pointer '><IoIosSearch /></div>
 
       {/* logoName */}
       <div>
@@ -38,7 +38,7 @@ function Navbar() {
       <div className='flex items-center gap-5  hover:cursor-pointer '>
       <div className="flex gap-4">
       <Link href={`/productcart`}><RiShoppingCart2Line /></Link>
-      <Link href={`/bun`}><FaRegHeart /></Link>
+      <Link href={`/wishlist`}><FaRegHeart /></Link>
       <CgProfile />
       </div>
       <div className=" max-[670px]:block hidden" onClick={homeContext.onHomeToggle}>

@@ -334,7 +334,7 @@ const [shipmentInp,setShipmentInp] = useState<Address>({
     //HANDLE STRIPE CHECKOUT FOR PAYMENT
     const onHandleCheckout = async () => {
       if(!cartData || cartData.addCartProd.length===0){
-        alert('Cart is EMpty')
+        toast.error('Cart is EMpty')
         return;
       }
       try {

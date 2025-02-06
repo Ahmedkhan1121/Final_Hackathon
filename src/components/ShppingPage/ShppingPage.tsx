@@ -10,8 +10,11 @@ import { ToastContainer } from 'react-toastify';
 function ShippingPage() {
   const {rateList,rateId,labelPdf,trackingObj} = useProductHook();
   return (
-    <section className='flex flex-col items-center gap-8 py-10'>
-      <h1 className={` text-5xl max-[500px]:text-4xl max-[340px]:text-3xl`}>SHIPPING RATES</h1>
+   
+    // styling   className='flex flex-col items-center gap-8 py-10'
+    <section className="flex flex-col items-center gap-8 py-10 min-h-screen bg-gradient-to-br from-slate-100 to-slate-200" >
+       {/* //styling className={` text-5xl max-[500px]:text-4xl max-[340px]:text-3xl`} */}
+      <h1  className="text-5xl font-bold text-gray-800 max-[500px]:text-4xl max-[340px]:text-3xl animate-fadeIn">SHIPPING RATES</h1>
     <ShipppingForm/>
      {
       rateList.length>0 ? <RateList/> : ''

@@ -15,7 +15,7 @@ function NavAboutIcons() {
     <div className='flex gap-3 max-[730px]:absolute right-14 max-[740px]:right-3 '>
       <IoIosSearch />
       <Link href={`/productcart`}><RiShoppingCart2Line /></Link>
-      <Link href={``}><FaRegHeart /></Link>
+      <Link href={`/wishlist`}><FaRegHeart /></Link>
       <CgProfile />
       <div className='hidden max-[740px]:flex' onClick={aboutContext.onAboutToggle}>
             <CiMenuFries />

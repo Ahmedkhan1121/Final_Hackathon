@@ -41,7 +41,7 @@ function CartProduct({product}:{product:CartListType}) {
     <div className='size-5 rounded-lg' style={{backgroundColor:product.productcolor}}>
     </div>
     {/* delet */}
-    <RiDeleteBinLine className='text-red-500 text-[20px]' onClick={()=>cartDeleteItem(product.productid)} />
+    <RiDeleteBinLine className='text-red-500 text-[20px] cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-200' onClick={()=>cartDeleteItem(product.productid)} />
     </div>
     </div>
    
