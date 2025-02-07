@@ -1,7 +1,5 @@
 'use client';
 import { useProductHook } from '@/Context/ProductContext';
-// import CartProduct from '../CartProduct/CartProduct'
-// import CartQuantityBtn from '../CartQuantityBtn/CartQuantityBtn'
 import CartTableData from '../CartTableData/CartTableData'
 
 function CartTable() {

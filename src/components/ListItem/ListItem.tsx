@@ -1,12 +1,10 @@
 "use client"
 import { useFurnContext } from '@/Context/Context';
-// import { HeaderContext } from '@/Context/Context';
 import { navList } from '@/utils/helper';
 import Link from 'next/link'
 
 function NavListHome() {
   
-  // const navContext = useContext(HeaderContext)
 
   const homeContext= useFurnContext();
 

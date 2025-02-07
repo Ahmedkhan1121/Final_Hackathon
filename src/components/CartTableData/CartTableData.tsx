@@ -6,13 +6,7 @@ import { CartListType } from '@/utils/type/type';
 
 function CartTableData({product}:{product:CartListType}) {
  
-  // if(addCartProd.length===0){
-    // return(
-    //   <section>
-    //     <h1>No Cart Items</h1>
-    //   </section>
-    // )
-  // }else{
+  
     return (
       
       <div className='flex  justify-between items-center px-[10px] py-[20px] border-t-2 border-b-2 max-[610px]:border-t-0 max-[300px]:px-[0px]'  >
@@ -27,7 +21,7 @@ function CartTableData({product}:{product:CartListType}) {
       </div>
       
     )
-  // }
+  
 }
 
 export default CartTableData

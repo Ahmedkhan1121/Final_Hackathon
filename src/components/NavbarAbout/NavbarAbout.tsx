@@ -8,12 +8,7 @@ import NavListAbout from "../NavListAbout/NavListAbout";
 import { ScrollListAbout } from "../ScrollListAbout/ScrollListAbout";
 
 function NavbarAbout() {
-// const aboutContext =useFurnContext()
 
-  //  const [navList,setNavList]= useState<boolean>(false);
-  //   const onNavToggle = () => {
-  //     setNavList((prev) => !prev);
-  //   };
   return (
     <nav className=''>
     {/* div 1 */}

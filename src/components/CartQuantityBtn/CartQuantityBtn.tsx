@@ -1,19 +1,10 @@
 'use client'
 import { useProductHook } from '@/Context/ProductContext';
-// import { FaMinus } from 'react-icons/fa';
 import { FiPlus } from 'react-icons/fi';
 import { TfiMinus } from 'react-icons/tfi';
 
 function CartQuantityBtn({id,quanity}:{id:number,quanity:number}) {
-    // const [quanityValu,setQuantityValue] =useState<number>(0);
-    
-    // const increaseQuantity = () => {
-    //     setQuantityValue(prev => prev + 1);
-    // };
-
-    // const decreaseQuantity = () => {
-    //     setQuantityValue(prev => (prev > 0 ? prev - 1 : 0));
-    // };
+   
     const {addProdDec,addProdInc}=useProductHook()
 
   return (

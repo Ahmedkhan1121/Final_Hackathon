@@ -1,27 +1,19 @@
 'use client';
-// import React, { useContext, useState } from 'react'
 import { IoIosSearch } from "react-icons/io";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-// import NavList from '../NavList/NavList';
 import Link from 'next/link';
 import { CiMenuBurger } from 'react-icons/ci';
 import NavListHome from '../ListItem/ListItem';
 import { useFurnContext } from '@/Context/Context';
 import { FaRegHeart } from "react-icons/fa";
-// import { HeaderContext } from '@/Context/Context';
 
 function Navbar() {
 
-  // const navContext = useContext(HeaderContext)
 
   // custom hook
   const homeContext=useFurnContext()
-  // const [navList,setNavList]= useState<boolean>(false);
-  // const onNavToggle = () => {
-  //   setNavList((prev) => !prev)
-  //   // alert(navList)
-  // }
+ 
 
   return (
     <nav className=''>

@@ -1,10 +1,3 @@
-// import React from 'react'
-// import FooterMenu from '../FooterMenu/FooterMenu'
-// import FooterCategories from '../FooterCategories/FooterCategories'
-// import FooterOurCompany from '../FooterOurCompany/FooterOurCompany'
-// import FooterForm from '../FooterForm/FooterForm'
-// import FooterIcons from '../FooterIcons/FooterIcons'
-
 import FooterCategories from "../FooterCategories/FooterCategories"
 import FooterForm from "../FooterForm/FooterForm"
 import FooterIcons from "../FooterIcons/FooterIcons"
@@ -14,7 +7,6 @@ import FooterOurCompany from "../FooterOurCompany/FooterOurCompany"
 function Footer() {
   return (
     <footer className='flex flex-col bg-[#2A254B] justify-around  p-[10px]  '>
-      {/* py-[45px] px-[35px] max-[1250px]:px-[20px] max-[900px]:px-[0] */}
         
       
     <div className='flex justify-center  gap-20 py-10 max-[1010px]:gap-[45px] max-[970px]:gap-[30px]  max-[700px]:flex-col max-[700px]:items-center  max-[590px]:gap-[50px]'>
