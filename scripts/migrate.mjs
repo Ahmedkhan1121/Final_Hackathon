@@ -90,3 +90,4 @@ const migrateDataToSanity = async () => {
 migrateDataToSanity()
   .then(() => console.log("Migration complete!"))
   .catch((error) => console.error("Migration failed:", error.message));
+  
